@@ -1,10 +1,12 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
+#include <stdlib.h>
 
 RF24 radio(7, 8);  // CE pin, CSN pin
 
 const byte addresses[][6] = { "00001", "00002" };
+char receivedCommand;
 char result[10];
 
 void setup() {
@@ -19,33 +21,27 @@ void setup() {
 
 void loop() {
   if (radio.available()) {
-    char receivedCommand;
     radio.read(&receivedCommand, sizeof(receivedCommand));
     Serial.print("Received: ");
     Serial.println(receivedCommand);
     delay(100);
     radio.stopListening();
     delay(100);
-    if (receivedCommand == 's') {
-      result[0] = 'h';
-      result[1] = 'e';
-      result[2] = 'l';
-      result[3] = 'l';
-      result[4] = 'o';
-      result[5] = '\0';
-    } else {
-      result[0] = 'e';
-      result[1] = 'r';
-      result[2] = 'r';
-      result[3] = 'o';
-      result[4] = 'r';
-      result[5] = '\0';
-    }
-
+    prepResult();
     radio.write(&result, sizeof(result));
     delay(100);
     radio.startListening();
     Serial.print("Sent: ");
     Serial.println(result);
+  }
+}
+
+void prepResult() {
+  if (receivedCommand == 'h') {
+    strcpy(result, "Hello!");
+  } else if (receivedCommand == 't') {
+    itoa(millis() / 1000, result, 10);
+  } else {
+    strcpy(result, "Error");
   }
 }
