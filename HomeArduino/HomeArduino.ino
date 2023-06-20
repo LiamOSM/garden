@@ -5,7 +5,7 @@
 RF24 radio(7, 8);  // CE pin, CSN pin
 
 const byte addresses[][6] = { "00001", "00002" };
-char result[10];
+char result[30];
 
 void setup() {
   Serial.begin(9600);
@@ -28,7 +28,6 @@ void loop() {
   }
 
   if (radio.available()) {
-    char response;
     radio.read(&result, sizeof(result));
     Serial.print("Received: ");
     Serial.println(result);
