@@ -2,8 +2,8 @@ import requests
 import json
 
 API_KEY = "f721b437a965b0a0b0bf8bf406432e74"  # Replace with your OpenWeatherMap API key
-LATITUDE = "42.967735"  # Replace with your location's latitude
-LONGITUDE = "-81.357245"  # Replace with your location's longitude
+LATITUDE = "43.335209"  # Replace with your location's latitude
+LONGITUDE = "-79.895393"  # Replace with your location's longitude
 
 def get_rainfall_forecast(api_key, latitude, longitude):
     url = f"https://api.openweathermap.org/data/2.5/forecast?lat={latitude}&lon={longitude}&appid={api_key}"
